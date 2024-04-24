@@ -1,0 +1,83 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring-security
+    username: postgres
+    password: 12345
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+oauth:
+  path: http://localhost:8080
+  admin:
+    username: admin
+    password: "12345:"
+    client-id: biggest-api
+  base-url: ${oauth.path}/auth
+  realm: Derrick
+  authorization-grant-type: client_credentials
+  client:
+    id: biggest-api
+    name: Biggest
+    secret: DR08IbttiqZ9OB6E8WXIpXaWyfDHRoT6
+
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/Derrick
+
+    client:
+      registration:
+        keycloak:
+          provider: keycloak
+          authorization-grant-type: client_credentials
+          client-secret: DR08IbttiqZ9OB6E8WXIpXaWyfDHRoT6
+          client-id: biggest-api
+
+
+    provider:
+      keycloak:
+        issuer-uri: ${spring.security.oauth2.resource-server.jwt.issuer-uri}
+        jwk-set-uri: ${spring.security.oauth2.resource-server.jwt.issuer-uri}/protocol/openid-connect/certs
+        token-uri: ${spring.security.oauth2.resource-server.jwt.issuer-uri}/protocol/openid-connect/token
+
+
+
+
+
+springdoc:
+  api-docs:
+    path: /api/v1/students/api-docs
+  swagger-ui:
+    path: /api/v1/students/swagger-ui.html
+    oauth:
+      client-id: ${spring.security.oauth2.client.registration.keycloak.client-id}
+      # please delete the client secret when deploying to production
+      client-secret: ${spring.security.oauth2.client.registration.keycloak.client-secret}
+      realm: ${spring.security.oauth2.resource-server.jwt.issuer-uri}
+      use-pkce-with-authorization-code-grant: true
+      token-path:  ${spring.security.oauth2.client.provider.keycloak.token-uri}
+
+  show-actuator: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    env:
+      show-values: always
+
+
+
+
+
