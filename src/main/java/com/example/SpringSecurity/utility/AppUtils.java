@@ -1,5 +1,6 @@
 package com.example.SpringSecurity.utility;
 
+import com.example.SpringSecurity.dto.ResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
@@ -68,12 +69,12 @@ public class AppUtils {
      * @return A Pagination object containing the mapped entities, page information, and total element count.
      *         Returns null if the input Page is null.
      */
-//    public static <T> Pagination mapToPagination(Page<T> page) {
-//        if (page == null) {
-//            return null;
-//        }
-//        return new Pagination(page.getContent(), page.getPageable(), (int) page.getTotalElements());
-//    }
+    public static <T> Pagination mapToPagination(Page<T> page) {
+        if (page == null) {
+            return null;
+        }
+        return new Pagination(page.getContent(), page.getPageable(), (int) page.getTotalElements());
+    }
 
     /**
      * This  method is used to fetch an integer value from a Map with its default value
@@ -162,19 +163,19 @@ public class AppUtils {
      * @param data The data to be included in the response.
      * @return ResponseDTO object.
      */
-//    public static ResponseDTO getResponseDTO(String message, HttpStatus status, Object data){
-//        if(data == null){
-//            ResponseDTO responseDTO = getResponseDTO(message, status);
-//            return responseDTO;
-//        }
-//        ResponseDTO responseDTO = ResponseDTO.builder()
-//                .message(message)
-//                .statusCode(status.value())
-//                .data(data)
-//                .date(ZonedDateTime.now()).build();
-//        return responseDTO;
-//
-//    }
+    public static ResponseDTO getResponseDTO(String message, HttpStatus status, Object data){
+        if(data == null){
+            ResponseDTO responseDTO = getResponseDTO(message, status);
+            return responseDTO;
+        }
+        ResponseDTO responseDTO = ResponseDTO.builder()
+                .message(message)
+                .statusCode(status.value())
+                .data(data)
+                .date(ZonedDateTime.now()).build();
+        return responseDTO;
+
+    }
 
     /**
      * This method is used to generate a ResponseDTO with message and status.
@@ -183,14 +184,14 @@ public class AppUtils {
      * @param status The HTTP status of the response.
      * @return ResponseDTO object.
      */
-//    public static ResponseDTO getResponseDTO(String message, HttpStatus status){
-//
-//        ResponseDTO responseDTO = ResponseDTO.builder()
-//                .message(message)
-//                .statusCode(status.value())
-//                .date(ZonedDateTime.now()).build();
-//        return responseDTO;
-//    }
+    public static ResponseDTO getResponseDTO(String message, HttpStatus status){
+
+        ResponseDTO responseDTO = ResponseDTO.builder()
+                .message(message)
+                .statusCode(status.value())
+                .date(ZonedDateTime.now()).build();
+        return responseDTO;
+    }
 
     /**
      * This method is used to fetch the Client Roles from a Jwt
@@ -230,8 +231,8 @@ public class AppUtils {
      * This method is used to fetch the Realm Roles from a Jwt
      * @param principal
      * @return List of realm roles
-     * @author Prince Amofah
-     * @createdAt 1st Sept 2023
+     * @author Derrick Donkoh
+     * @createdAt 24th April 2024
      * @modified
      * @modifiedBy
      * @modifiedAt
@@ -263,8 +264,8 @@ public class AppUtils {
      * This is used to fetch a value from a Map
      * @param data  Map
      * @return
-     * @author Prince Amofah
-     * @createdAt
+     * @author Derrick Donkoh
+     * @createdAt 24th April 2024
      * @modified
      * @modifiedBy
      * @modifiedAt
@@ -280,8 +281,8 @@ public class AppUtils {
      * This method is used to convert a camelcase String to snakeCase
      * @param value
      * @return
-     * @author Prince Amofah
-     * @createdAt 14th July 2023
+     * @author Derrick Donkoh
+     * @createdAt 24th April 2024
      * @modified
      * @modifiedBy
      * @modifiedAt
@@ -319,8 +320,8 @@ public class AppUtils {
     /**
      * This method extracts the logged-in user's email from the Security Context
      * @return String
-     * @author Prince Amofah
-     * @createdAt 1st Oct 2023
+     * @author Derrick Donkoh
+     * @createdAt 24th April 2024
      */
     public static String getAuthenticatedUserEmail(){
         try{
@@ -402,7 +403,7 @@ public class AppUtils {
     public static boolean hasProjectManagerRole(Collection<? extends  GrantedAuthority> roles) {
         return roles.stream()
                 .map(GrantedAuthority::getAuthority)
-                .anyMatch(role -> role.contains("PROJECT_MANAGER"));
+                .anyMatch(role -> role.contains("STUDENT"));
     }
 
 

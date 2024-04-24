@@ -22,7 +22,6 @@ public class StudentController {
     public List<StudentDto> findAll() {
         var res = studentService.findAll();
         return res;
-
     }
 
     @GetMapping("/{id}")

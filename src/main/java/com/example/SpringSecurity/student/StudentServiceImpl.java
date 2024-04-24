@@ -2,11 +2,14 @@ package com.example.SpringSecurity.student;
 
 import com.example.SpringSecurity.student.dto.StudentDto;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static com.example.SpringSecurity.utility.AppUtils.*;
 
 @Service
 @AllArgsConstructor
@@ -15,12 +18,23 @@ public class StudentServiceImpl implements StudentService{
     private final StudentRepository studentRepository;
     @Override
     public List<StudentDto> findAll() {
-        var a = studentRepository.findAll();
-       List<StudentDto> studentDto =  a.stream()
-                .map(student -> mapToStudentDto(student))
-                .collect(Collectors.toList());
 
-        return studentDto;
+        var roles = getUserRoles();
+
+        boolean isAdmin = hasAdminRole(roles);
+        boolean isStudent = hasRole(roles, List.of("STUDENT"));
+
+        if (isAdmin) {
+            var a = studentRepository.findAll();
+            List<StudentDto> studentDto = a.stream()
+                    .map(student -> mapToStudentDto(student))
+                    .collect(Collectors.toList());
+
+            return studentDto;
+
+
+        }
+        return null;
     }
 
     public Student findById(UUID id) {

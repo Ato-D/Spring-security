@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/spring-security
+    url: jdbc:postgresql://localhost:5433/spring-security
     username: postgres
     password: 12345
   jpa:
@@ -18,7 +18,7 @@ oauth:
   path: http://localhost:8080
   admin:
     username: admin
-    password: "12345:"
+    password: "12345"
     client-id: biggest-api
   base-url: ${oauth.path}/auth
   realm: Derrick
@@ -26,7 +26,7 @@ oauth:
   client:
     id: biggest-api
     name: Biggest
-    secret: DR08IbttiqZ9OB6E8WXIpXaWyfDHRoT6
+    secret: UoMiHOcjb1kOxOiur2QH9eun7Z3wPSqi
 
   security:
     oauth2:
@@ -39,7 +39,7 @@ oauth:
         keycloak:
           provider: keycloak
           authorization-grant-type: client_credentials
-          client-secret: DR08IbttiqZ9OB6E8WXIpXaWyfDHRoT6
+          client-secret: UoMiHOcjb1kOxOiur2QH9eun7Z3wPSqi
           client-id: biggest-api
 
 

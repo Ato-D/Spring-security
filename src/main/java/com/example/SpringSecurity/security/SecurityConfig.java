@@ -41,11 +41,11 @@ import java.util.stream.Collectors;
 public class SecurityConfig {
 
 
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
 
-    public SecurityConfig(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
+//    public SecurityConfig(PasswordEncoder passwordEncoder) {
+//        this.passwordEncoder = passwordEncoder;
+//    }
 
     @Bean
     public JwtDecoder jwtDecoder() {
@@ -135,19 +135,19 @@ public class SecurityConfig {
 
 
 
-    @Bean
-    protected UserDetailsService userDetailsService() {
-        UserDetails annaSmithUser = User.builder()
-                .username("annasmith")
-                .password(passwordEncoder.encode("password"))
-                .roles("STUDENT")
-                .build();
-
-        return new InMemoryUserDetailsManager(
-                annaSmithUser
-        );
-
-    }
+//    @Bean
+//    protected UserDetailsService userDetailsService() {
+//        UserDetails derrickUser = User.builder()
+//                .username("biggestd")
+//                .password(passwordEncoder.encode("12345"))
+//                .roles("STUDENT")
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(
+//                derrickUser
+//        );
+//
+//    }
 
 
 
