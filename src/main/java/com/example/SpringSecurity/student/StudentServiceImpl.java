@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -116,7 +115,7 @@ public class StudentServiceImpl implements StudentService{
             respose = getResponseDTO(message, HttpStatus.BAD_REQUEST);
 
         } catch (DataIntegrityViolationException e) {
-            log.error("Exception Occured! Message -> {} and Cause -> {}", e.getMostSpecificCause(), e.getCause());
+            log.error("Exception Occured! Message -> {} and Cause -> {}", e.getMostSpecificCause(), e.getMessage());
             respose = getResponseDTO(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.error("Exception Occured! statusCode -> {} and Cause -> {} and Message -> {}", 500, e.getCause(), e.getMessage());
@@ -126,26 +125,51 @@ public class StudentServiceImpl implements StudentService{
         return new ResponseEntity<>(respose, HttpStatus.valueOf(respose.getStatusCode()));
     }
 
-
     @Override
-    public Student updateStudent(StudentDto studentDto) {
-        var res = studentRepository.findById(studentDto.getId());
-        if (res.isPresent()) {
-            Student student = res.get();
-            student.setFirstName(studentDto.getFirstName());
-            student.setLastName(studentDto.getLastName());
-            student.setEmail(studentDto.getEmail());
-            return studentRepository.save(student);
-        } else {
-            throw new IllegalArgumentException("Student not found with ID: " + studentDto.getId());
+    public ResponseEntity<ResponseDTO> updateStudent(UUID id, StudentDto studentDto) {
+        ResponseDTO response;
+
+        try {
+            var isAdmin = hasAdminRole(getUserRoles());
+            if (isAdmin) {
+                Student existingStudent = studentRepository.findById(id)
+                        .orElseThrow(()
+                                -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Student with Id " + id + "Does Not Exist"));
+                existingStudent.setFirstName(studentDto.getFirstName());
+                existingStudent.setLastName(studentDto.getLastName());
+                existingStudent.setEmail(studentDto.getEmail());
+
+                var record = studentRepository.save(existingStudent);
+                log.info("Success! statusCode -> {} and Message -> {}", HttpStatus.ACCEPTED, record);
+                response = getResponseDTO("Record Updated Successfully", HttpStatus.ACCEPTED, record);
+            } else {
+                response = getResponseDTO("No Authorization to Update Student", HttpStatus.FORBIDDEN);
+            }
+        } catch (ResponseStatusException e) {
+            log.error("Exception Occured! statusCode -> {} and Message -> {} and Reason -> {}", e.getStatusCode(), e.getMessage(), e.getReason());
+            response = getResponseDTO(e.getReason(), HttpStatus.valueOf(e.getStatusCode().value()));
+        } catch (ObjectNotValidException e) {
+            var message = String.join("\n", e.getErrorMessages());
+            log.info("Exception Occured! Reason -> {}", message);
+            response = getResponseDTO(message, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            log.error("Error Occured! statusCode -> {} and Cause -> {} and Message -> {}", 500, e.getCause(), e.getMessage());
+            response = getResponseDTO(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatusCode()));
     }
-
 
     @Override
-    public void deleteById(UUID id) {
-          studentRepository.deleteById(id);
+    public ResponseEntity<ResponseDTO> deleteStudent(UUID id, StudentDto studentDto) {
+        log.info("Inside Delete Student Method ::: Trying To Delete Student Per Given Params");
+        return null;
     }
+
+
+//    @Override
+//    public void deleteById(UUID id) {
+//          studentRepository.deleteById(id);
+//    }
 
     private StudentDto mapToStudentDto(Student student) {
 

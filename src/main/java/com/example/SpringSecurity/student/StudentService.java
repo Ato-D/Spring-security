@@ -15,13 +15,9 @@ public interface StudentService {
 
     ResponseEntity<ResponseDTO> findById(UUID id);
 
-//    Student findById(UUID id);
-
     ResponseEntity<ResponseDTO> saveStudent(StudentDto studentDto);
 
-    Student updateStudent(StudentDto studentDto);
+    ResponseEntity<ResponseDTO> updateStudent(UUID id, StudentDto studentDto);
 
-    void deleteById(UUID id);
-
-//    ResponseEntity<ResponseDTO> saveStudent(StudentDto studentDto);
+    ResponseEntity<ResponseDTO> deleteStudent(UUID id, StudentDto studentDto);
 }

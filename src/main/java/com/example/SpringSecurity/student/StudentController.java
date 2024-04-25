@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -40,11 +39,11 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public Student update(@PathVariable(name = "id") UUID id,
-                          @RequestBody StudentDto studentDto) {
+    public ResponseEntity<ResponseDTO> update(@PathVariable(name = "id") UUID id,
+                                              @RequestBody StudentDto studentDto) {
 
         studentDto.setId(id);
-        return studentService.updateStudent(studentDto);
+        return studentService.updateStudent(id, studentDto);
     }
 
     @DeleteMapping("/{id}")
