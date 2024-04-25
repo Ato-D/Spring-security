@@ -14,7 +14,9 @@ public interface StudentService {
 
     ResponseEntity<ResponseDTO> findAllStudents(Map<String, String> params);
 
-    Student findById(UUID id);
+    ResponseEntity<ResponseDTO> findById(UUID id);
+
+//    Student findById(UUID id);
 
     void saveStudent(StudentDto studentDto);
 

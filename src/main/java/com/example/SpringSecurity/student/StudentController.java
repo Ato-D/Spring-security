@@ -27,7 +27,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public Student student(@PathVariable(name = "id") UUID id) {
+    public ResponseEntity<ResponseDTO> findById(@PathVariable(name = "id") UUID id) {
         var res = studentService.findById(id);
         return res;
     }
