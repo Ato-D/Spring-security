@@ -159,11 +159,57 @@ public class StudentServiceImpl implements StudentService{
         return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatusCode()));
     }
 
-    @Override
-    public ResponseEntity<ResponseDTO> deleteStudent(UUID id, StudentDto studentDto) {
+//    @Override
+//    public ResponseEntity<ResponseDTO> deleteStudent(UUID id, StudentDto studentDto) {
+//        log.info("Inside Delete Student Method ::: Trying To Delete Student Per Given Params");
+//        ResponseDTO response;
+//
+//        try {
+//            boolean isAdmin = hasAdminRole(getUserRoles());
+//            if (isAdmin) {
+//                var res = studentRepository.findById(id)
+//                        .orElseThrow(()
+//                        -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Student with Id " + id + "Does Not Exist"));
+//               studentRepository.deleteById(id);
+//
+//
+//            }
+//
+//        } catch (ResponseStatusException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return null;
+//    }
+
+    public ResponseEntity<ResponseDTO> deleteStudent(UUID id) {
         log.info("Inside Delete Student Method ::: Trying To Delete Student Per Given Params");
-        return null;
-    }
+        ResponseDTO response;
+
+        try {
+            boolean isAdmin = hasAdminRole(getUserRoles());
+            if (isAdmin) {
+                var existingStudent = studentRepository.findById(id);
+                if (existingStudent.isPresent()) {
+                    studentRepository.deleteById(id);
+                }
+                log.info("Success! statusCode -> {} and Message -> {}", HttpStatus.OK, existingStudent);
+                response = getResponseDTO("Student deleted successfully", HttpStatus.OK);
+            }
+            log.info("Not Authorized to Delete Student", HttpStatus.FORBIDDEN);
+            response = getResponseDTO("Not Authorized to Delete Student", HttpStatus.FORBIDDEN);
+
+        }
+
+     catch (ResponseStatusException e) {
+                log.error("Exception Occured! Reason -> {} and Message -> {}", e.getCause(), e.getReason());
+                response = getResponseDTO(e.getMessage(), HttpStatus.valueOf(e.getStatusCode().value()));
+            } catch (Exception e) {
+                log.error("Exception Occured! statusCode -> {} and Cause -> {} and Message -> {}", 500, e.getCause(), e.getMessage());
+                response = getResponseDTO(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            return new ResponseEntity<>(response,HttpStatusCode.valueOf(response.getStatusCode()));
+        }
+
 
 
 //    @Override

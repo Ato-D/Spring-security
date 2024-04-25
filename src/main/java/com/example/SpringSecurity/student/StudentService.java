@@ -19,5 +19,5 @@ public interface StudentService {
 
     ResponseEntity<ResponseDTO> updateStudent(UUID id, StudentDto studentDto);
 
-    ResponseEntity<ResponseDTO> deleteStudent(UUID id, StudentDto studentDto);
+    ResponseEntity<ResponseDTO> deleteStudent(UUID id);
 }

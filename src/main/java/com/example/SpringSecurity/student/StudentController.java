@@ -41,13 +41,12 @@ public class StudentController {
     @PutMapping("/{id}")
     public ResponseEntity<ResponseDTO> update(@PathVariable(name = "id") UUID id,
                                               @RequestBody StudentDto studentDto) {
-
         studentDto.setId(id);
         return studentService.updateStudent(id, studentDto);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable(name = "id") UUID id) {
-      studentService.deleteById(id);
+    public ResponseEntity<ResponseDTO> delete(@PathVariable(name = "id") UUID id) {
+      return studentService.deleteStudent(id);
     }
 }
