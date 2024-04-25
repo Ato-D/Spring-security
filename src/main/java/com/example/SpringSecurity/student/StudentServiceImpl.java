@@ -194,10 +194,11 @@ public class StudentServiceImpl implements StudentService{
                 }
                 log.info("Success! statusCode -> {} and Message -> {}", HttpStatus.OK, existingStudent);
                 response = getResponseDTO("Student deleted successfully", HttpStatus.OK);
-            }
-            log.info("Not Authorized to Delete Student", HttpStatus.FORBIDDEN);
-            response = getResponseDTO("Not Authorized to Delete Student", HttpStatus.FORBIDDEN);
+            } else {
+                log.info("Not Authorized to Delete Student", HttpStatus.FORBIDDEN);
+                response = getResponseDTO("Not Authorized to Delete Student", HttpStatus.FORBIDDEN);
 
+            }
         }
 
      catch (ResponseStatusException e) {
