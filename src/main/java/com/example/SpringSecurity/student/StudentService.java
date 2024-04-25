@@ -4,7 +4,6 @@ import com.example.SpringSecurity.dto.ResponseDTO;
 import com.example.SpringSecurity.student.dto.StudentDto;
 import org.springframework.http.ResponseEntity;
 
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -18,9 +17,11 @@ public interface StudentService {
 
 //    Student findById(UUID id);
 
-    void saveStudent(StudentDto studentDto);
+    ResponseEntity<ResponseDTO> saveStudent(StudentDto studentDto);
 
     Student updateStudent(StudentDto studentDto);
 
     void deleteById(UUID id);
+
+//    ResponseEntity<ResponseDTO> saveStudent(StudentDto studentDto);
 }

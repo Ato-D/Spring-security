@@ -35,8 +35,8 @@ public class StudentController {
 
 
     @PostMapping
-    public void save(@RequestBody StudentDto studentDto) {
-        studentService.saveStudent(studentDto);
+    public ResponseEntity<ResponseDTO> save(@RequestBody StudentDto studentDto) {
+        return studentService.saveStudent(studentDto);
     }
 
     @PutMapping("/{id}")
