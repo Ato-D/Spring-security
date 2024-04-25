@@ -1,11 +1,14 @@
 package com.example.SpringSecurity.student;
 
 
+import com.example.SpringSecurity.dto.ResponseDTO;
 import com.example.SpringSecurity.student.dto.StudentDto;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import static com.example.SpringSecurity.security.SecurityConfig.CONTEXT_PATH;
@@ -19,9 +22,8 @@ public class StudentController {
 
 
     @GetMapping()
-    public List<StudentDto> findAll() {
-        var res = studentService.findAll();
-        return res;
+    public ResponseEntity<ResponseDTO> findAll(@RequestParam Map<String, String> params) {
+        return studentService.findAllStudents(params);
     }
 
     @GetMapping("/{id}")

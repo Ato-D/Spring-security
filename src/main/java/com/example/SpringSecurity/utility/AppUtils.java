@@ -397,7 +397,7 @@ public class AppUtils {
     public static boolean hasAdminRole(Collection<? extends GrantedAuthority> roles) {
         return roles.stream()
                 .map(GrantedAuthority::getAuthority)
-                .anyMatch(role -> role.contains("ADMIN"));
+                .anyMatch(role -> role.contains("admin"));
     }
 
     public static boolean hasProjectManagerRole(Collection<? extends  GrantedAuthority> roles) {
