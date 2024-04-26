@@ -25,6 +25,12 @@ import static com.example.SpringSecurity.utility.AppUtils.*;
 public class StudentServiceImpl implements StudentService{
 
     private final StudentRepository studentRepository;
+
+    /**
+     * This method is use to find all the students saved in the db
+     * @param params the query parameters we are passing
+     * @return the respose onbject and the status code
+     */
     @Override
     public ResponseEntity<ResponseDTO> findAllStudents(Map<String, String> params) {
         log.info("Inside find All Students :::: Trying to fetch students per given pagination params");
@@ -59,6 +65,13 @@ public class StudentServiceImpl implements StudentService{
 
     }
 
+
+    /**
+     * This method finds the student by his or her id
+     * @param id represents the ID of the student we are finding
+     * @return returns the response and the status code
+     */
+
     @Override
     public ResponseEntity<ResponseDTO> findById(UUID id) {
         log.info("Inside find Find Student by Id ::: Trying to find student type id -> {}", id);
@@ -84,9 +97,15 @@ public class StudentServiceImpl implements StudentService{
           return new ResponseEntity<>(response,HttpStatusCode.valueOf(response.getStatusCode()));
     }
 
+
+    /**
+     * This method saves the student in the database
+     * @param studentDto represents the object to be saved
+     * @return returns the response and the status code
+     */
     @Override
     public ResponseEntity<ResponseDTO> saveStudent(StudentDto studentDto) {
-        log.info("Inside the Save Student method");
+        log.info("Inside the Save Student method ::: Trying to save a student");
         ResponseDTO respose;
 
         try {
@@ -125,8 +144,15 @@ public class StudentServiceImpl implements StudentService{
         return new ResponseEntity<>(respose, HttpStatus.valueOf(respose.getStatusCode()));
     }
 
+    /**
+     * The method performs the update of student
+     * @param id the id of the student to be updated
+     * @param studentDto the object we are updating
+     * @return returns the response and the status code of the response
+     */
     @Override
     public ResponseEntity<ResponseDTO> updateStudent(UUID id, StudentDto studentDto) {
+        log.info("Inside the update student method ::: Trying to update a student");
         ResponseDTO response;
 
         try {
@@ -159,27 +185,11 @@ public class StudentServiceImpl implements StudentService{
         return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatusCode()));
     }
 
-//    @Override
-//    public ResponseEntity<ResponseDTO> deleteStudent(UUID id, StudentDto studentDto) {
-//        log.info("Inside Delete Student Method ::: Trying To Delete Student Per Given Params");
-//        ResponseDTO response;
-//
-//        try {
-//            boolean isAdmin = hasAdminRole(getUserRoles());
-//            if (isAdmin) {
-//                var res = studentRepository.findById(id)
-//                        .orElseThrow(()
-//                        -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Student with Id " + id + "Does Not Exist"));
-//               studentRepository.deleteById(id);
-//
-//
-//            }
-//
-//        } catch (ResponseStatusException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return null;
-//    }
+    /**
+     * This method is used for deleting the student
+     * @param id represents the id of the student
+     * @return returns the respose and the http status code of the response
+     */
 
     public ResponseEntity<ResponseDTO> deleteStudent(UUID id) {
         log.info("Inside Delete Student Method ::: Trying To Delete Student Per Given Params");
@@ -197,11 +207,9 @@ public class StudentServiceImpl implements StudentService{
             } else {
                 log.info("Not Authorized to Delete Student", HttpStatus.FORBIDDEN);
                 response = getResponseDTO("Not Authorized to Delete Student", HttpStatus.FORBIDDEN);
-
             }
         }
-
-     catch (ResponseStatusException e) {
+        catch (ResponseStatusException e) {
                 log.error("Exception Occured! Reason -> {} and Message -> {}", e.getCause(), e.getReason());
                 response = getResponseDTO(e.getMessage(), HttpStatus.valueOf(e.getStatusCode().value()));
             } catch (Exception e) {
@@ -211,12 +219,11 @@ public class StudentServiceImpl implements StudentService{
             return new ResponseEntity<>(response,HttpStatusCode.valueOf(response.getStatusCode()));
         }
 
-
-
-//    @Override
-//    public void deleteById(UUID id) {
-//          studentRepository.deleteById(id);
-//    }
+    /**
+     * This method maps the Student entity to the student dto
+     * @param student represents the instance of the student entity
+     * @return returns the student dto
+     */
 
     private StudentDto mapToStudentDto(Student student) {
 

@@ -9,8 +9,6 @@ import java.util.UUID;
 
 public interface StudentService {
 
-//    List<StudentDto> findAll();
-
     ResponseEntity<ResponseDTO> findAllStudents(Map<String, String> params);
 
     ResponseEntity<ResponseDTO> findById(UUID id);

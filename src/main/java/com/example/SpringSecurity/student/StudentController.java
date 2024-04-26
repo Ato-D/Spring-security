@@ -32,7 +32,6 @@ public class StudentController {
     }
 
 
-
     @PostMapping
     public ResponseEntity<ResponseDTO> save(@RequestBody StudentDto studentDto) {
         return studentService.saveStudent(studentDto);

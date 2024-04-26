@@ -13,8 +13,8 @@ import java.util.Set;
  * @ResponseStatus Indicates the HTTP response status code when this exception is thrown.
  * @AllArgsConstructor Lombok's annotation to generate a constructor with all fields for dependency injection.
  * @Data Lombok's annotation to generate getters, setters, toString, equals, and hashCode methods.
- * @Author Prince Amofah
- * @CreatedAt 30th September 2023
+ * @Author Derrick Donkoh
+ * @CreatedAt 25th April 2024
  */
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 @AllArgsConstructor
