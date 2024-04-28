@@ -1,7 +1,7 @@
 package com.example.SpringSecurity.student;
 
 import com.example.SpringSecurity.dto.ResponseDTO;
-import com.example.SpringSecurity.student.dto.StudentDto;
+import com.example.SpringSecurity.dto.StudentDto;
 import com.example.SpringSecurity.utility.ObjectNotValidException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -18,6 +19,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.example.SpringSecurity.utility.AppUtils.*;
+import static org.keycloak.TokenCategory.ADMIN;
 
 @Service
 @AllArgsConstructor
@@ -111,9 +113,8 @@ public class StudentServiceImpl implements StudentService{
         try {
 
             boolean isAdmin = hasAdminRole(getUserRoles());
-            if (isAdmin) {
+//            if (isAdmin) {
                 var student = Student.builder()
-                        .id(studentDto.getId())
                         .firstName(studentDto.getFirstName())
                         .lastName(studentDto.getLastName())
                         .email(studentDto.getEmail())
@@ -121,9 +122,10 @@ public class StudentServiceImpl implements StudentService{
                 var record = studentRepository.save(student);
                 log.info("Success! statusCode -> {} and Message -> {}", HttpStatus.CREATED, record);
                 respose = getResponseDTO("Record Saved Successfully", HttpStatus.OK, record);
-            } else {
-                respose = getResponseDTO("No authorization to create student", HttpStatus.FORBIDDEN);
-            }
+//            }
+//        else {
+//                respose = getResponseDTO("No authorization to create student", HttpStatus.FORBIDDEN);
+//            }
 
         } catch (ResponseStatusException e) {
             log.error("Error Occured! statusCode -> {}, Message -> {}, Reason -> {}", e.getStatusCode(), e.getMessage(), e.getReason());
@@ -197,17 +199,19 @@ public class StudentServiceImpl implements StudentService{
 
         try {
             boolean isAdmin = hasAdminRole(getUserRoles());
-            if (isAdmin) {
+//            if (isAdmin) {
                 var existingStudent = studentRepository.findById(id);
                 if (existingStudent.isPresent()) {
                     studentRepository.deleteById(id);
                 }
                 log.info("Success! statusCode -> {} and Message -> {}", HttpStatus.OK, existingStudent);
                 response = getResponseDTO("Student deleted successfully", HttpStatus.OK);
-            } else {
-                log.info("Not Authorized to Delete Student", HttpStatus.FORBIDDEN);
-                response = getResponseDTO("Not Authorized to Delete Student", HttpStatus.FORBIDDEN);
-            }
+//            }
+
+//        else {
+//                log.info("Not Authorized to Delete Student", HttpStatus.FORBIDDEN);
+//                response = getResponseDTO("Not Authorized to Delete Student", HttpStatus.FORBIDDEN);
+//            }
         }
         catch (ResponseStatusException e) {
                 log.error("Exception Occured! Reason -> {} and Message -> {}", e.getCause(), e.getReason());

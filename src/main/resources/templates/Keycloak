@@ -1,0 +1,58 @@
+{
+  "allowRemoteResourceManagement": true,
+  "policyEnforcementMode": "ENFORCING",
+  "resources": [
+    {
+      "name": "Create Student",
+      "type": "POST",
+      "ownerManagedAccess": true,
+      "displayName": "Create Resource",
+      "attributes": {},
+      "_id": "566a89d1-be6d-4134-b8b2-53bafe437290",
+      "uris": [
+        "api/v1/student"
+      ],
+      "scopes": [
+        {
+          "name": "POST"
+        }
+      ],
+      "icon_uri": "api/v1/students"
+    }
+  ],
+  "policies": [
+    {
+      "id": "9fb47d5a-f811-498e-8ed0-2c4d12fd40c4",
+      "name": "Create Policy",
+      "description": "",
+      "type": "role",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "roles": "[{\"id\":\"ADMIN\",\"required\":true}]"
+      }
+    },
+    {
+      "id": "bf15ee97-31dd-4e69-989c-2e05c8a228ef",
+      "name": "Create Student",
+      "description": "",
+      "type": "resource",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "defaultResourceType": "",
+        "resources": "[\"Create Student\"]",
+        "applyPolicies": "[\"Create Policy\"]"
+      }
+    }
+  ],
+  "scopes": [
+    {
+      "id": "6bafef76-fec6-44ff-8e72-c874ee6fdb7c",
+      "name": "POST",
+      "iconUri": "api/v1/students",
+      "displayName": "Create student"
+    }
+  ],
+  "decisionStrategy": "UNANIMOUS"
+}

@@ -2,7 +2,7 @@ package com.example.SpringSecurity.student;
 
 
 import com.example.SpringSecurity.dto.ResponseDTO;
-import com.example.SpringSecurity.student.dto.StudentDto;
+import com.example.SpringSecurity.dto.StudentDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

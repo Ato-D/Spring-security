@@ -1,0 +1,28 @@
+{
+  "realm": "Derrick",
+  "auth-server-url": "http://localhost:8080",
+  "resource": "biggest-api",
+  "credentials": {
+    "secret" : "DR08IbttiqZ9OB6E8WXIpXaWyfDHRoT6"
+  },
+  "http-method-as-scope" : true,
+  "paths": [
+    {
+      "path": "/api/v1/students/*",
+      "enforcement-mode": "ENFORCING"
+    },
+        {
+          "path": "/swagger-ui/*",
+          "enforcement-mode": "DISABLED"
+        },
+        {
+          "path": "/v1/students/api-docs/*",
+          "enforcement-mode": "DISABLED"
+        }
+      ]
+    }
+
+
+
+
+

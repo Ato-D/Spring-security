@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/spring-security
+    url: jdbc:postgresql://localhost:5432/spring-security
     username: postgres
     password: 12345
   jpa:
@@ -22,11 +22,11 @@ oauth:
     client-id: biggest-api
   base-url: ${oauth.path}/auth
   realm: Derrick
-  authorization-grant-type: client_credentials
+  authorization-grant-type: password
   client:
     id: biggest-api
     name: Biggest
-    secret: UoMiHOcjb1kOxOiur2QH9eun7Z3wPSqi
+    secret: DR08IbttiqZ9OB6E8WXIpXaWyfDHRoT6
 
   security:
     oauth2:
