@@ -3,20 +3,32 @@
   "auth-server-url": "http://localhost:8080",
   "resource": "biggest-api",
   "credentials": {
-    "secret" : "DR08IbttiqZ9OB6E8WXIpXaWyfDHRoT6"
+    "secret" : "tKrF2Dbcu6YM7rsPj3iEPVadl7nH5Lxk"
   },
   "http-method-as-scope" : true,
   "paths": [
     {
+      "path": "/api/v1/students/findAll",
+      "enforcement-mode": "DISABLED"
+    },
+    {
       "path": "/api/v1/students/*",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/api/v1/students/createStudent",
+      "enforcement-mode": "ENFORCING"
+    },
+    {
+      "path": "/api/v1/students/deleteStudent/*",
       "enforcement-mode": "ENFORCING"
     },
         {
-          "path": "/swagger-ui/*",
+          "path": "/api/v1/students/swagger-ui/*",
           "enforcement-mode": "DISABLED"
         },
         {
-          "path": "/v1/students/api-docs/*",
+          "path": "/api/v1/students/api-docs/*",
           "enforcement-mode": "DISABLED"
         }
       ]

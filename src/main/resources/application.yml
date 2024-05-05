@@ -1,55 +1,56 @@
 server:
   port: 8081
 
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/spring-security
-    username: postgres
-    password: 12345
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
-
 oauth:
-  path: http://localhost:8080
+  path: "http://localhost:8080"
   admin:
     username: admin
     password: "12345"
     client-id: biggest-api
   base-url: ${oauth.path}/auth
   realm: Derrick
-  authorization-grant-type: password
+  authorization-grant-type: client_credentials
   client:
     id: biggest-api
     name: Biggest
-    secret: DR08IbttiqZ9OB6E8WXIpXaWyfDHRoT6
+    secret: tKrF2Dbcu6YM7rsPj3iEPVadl7nH5Lxk
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
   security:
     oauth2:
       resource-server:
         jwt:
-          issuer-uri: http://localhost:8080/realms/Derrick
+          issuer-uri: "http://localhost:8080/realms/Derrick"
 
-    client:
-      registration:
-        keycloak:
-          provider: keycloak
-          authorization-grant-type: client_credentials
-          client-secret: UoMiHOcjb1kOxOiur2QH9eun7Z3wPSqi
-          client-id: biggest-api
+      client:
+        registration:
+          keycloak:
+            provider: keycloak
+            authorization-grant-type: client_credentials
+            client-secret: MLNT5wI4esriCSLke5YPV1xqHN7vAWHQ
+            client-id: biggest-api
+
+        provider:
+          keycloak:
+            issuer-uri: ${spring.security.oauth2.resource-server.jwt.issuer-uri}
+            jwk-set-uri: ${spring.security.oauth2.resource-server.jwt.issuer-uri}/protocol/openid-connect/certs
+            token-uri: ${spring.security.oauth2.resource-server.jwt.issuer-uri}/protocol/openid-connect/token
 
 
-    provider:
-      keycloak:
-        issuer-uri: ${spring.security.oauth2.resource-server.jwt.issuer-uri}
-        jwk-set-uri: ${spring.security.oauth2.resource-server.jwt.issuer-uri}/protocol/openid-connect/certs
-        token-uri: ${spring.security.oauth2.resource-server.jwt.issuer-uri}/protocol/openid-connect/token
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring-security
+    username: postgres
+    password: 12345
 
-
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    show-sql: true
 
 
 
@@ -59,12 +60,17 @@ springdoc:
   swagger-ui:
     path: /api/v1/students/swagger-ui.html
     oauth:
-      client-id: ${spring.security.oauth2.client.registration.keycloak.client-id}
-      # please delete the client secret when deploying to production
-      client-secret: ${spring.security.oauth2.client.registration.keycloak.client-secret}
-      realm: ${spring.security.oauth2.resource-server.jwt.issuer-uri}
+#      client-id: ${spring.security.oauth2.client.registration.keycloak.client-id}
+#      client-secret: ${spring.security.oauth2.client.registration.keycloak.client-secret}
+#      realm: ${spring.security.oauth2.resource-server.jwt.issuer-uri}
+#      use-pkce-with-authorization-code-grant: true
+#      token-path:  ${spring.security.oauth2.client.provider.keycloak.token-uri}
+      client-id: biggest-api
+      client-secret: tKrF2Dbcu6YM7rsPj3iEPVadl7nH5Lxk
+      realm: Derrick
       use-pkce-with-authorization-code-grant: true
-      token-path:  ${spring.security.oauth2.client.provider.keycloak.token-uri}
+      token-url: http://localhost:8080/realms/Derrick/protocol/openid-connect/token
+
 
   show-actuator: true
 
@@ -76,6 +82,22 @@ management:
   endpoint:
     env:
       show-values: always
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
