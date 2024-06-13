@@ -1,4 +1,4 @@
-package com.example.SpringSecurity.student.dto;
+package com.example.SpringSecurity.dto;
 
 
 import lombok.AllArgsConstructor;

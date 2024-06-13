@@ -1,7 +1,7 @@
 package com.example.SpringSecurity.student;
 
 import com.example.SpringSecurity.dto.ResponseDTO;
-import com.example.SpringSecurity.student.dto.StudentDto;
+import com.example.SpringSecurity.dto.StudentDto;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Map;

@@ -2,7 +2,8 @@ package com.example.SpringSecurity.student;
 
 
 import com.example.SpringSecurity.dto.ResponseDTO;
-import com.example.SpringSecurity.student.dto.StudentDto;
+import com.example.SpringSecurity.dto.StudentDto;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,8 @@ public class StudentController {
     private final StudentService studentService;
 
 
-    @GetMapping()
-    public ResponseEntity<ResponseDTO> findAll(@RequestParam Map<String, String> params) {
+    @GetMapping("/findAll")
+    public ResponseEntity<ResponseDTO> findAll(@RequestParam  Map<String, String> params) {
         return studentService.findAllStudents(params);
     }
 
@@ -32,19 +33,19 @@ public class StudentController {
     }
 
 
-    @PostMapping
+    @PostMapping("/createStudent")
     public ResponseEntity<ResponseDTO> save(@RequestBody StudentDto studentDto) {
         return studentService.saveStudent(studentDto);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("updateStudent/{id}")
     public ResponseEntity<ResponseDTO> update(@PathVariable(name = "id") UUID id,
                                               @RequestBody StudentDto studentDto) {
         studentDto.setId(id);
         return studentService.updateStudent(id, studentDto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteStudent/{id}")
     public ResponseEntity<ResponseDTO> delete(@PathVariable(name = "id") UUID id) {
       return studentService.deleteStudent(id);
     }
